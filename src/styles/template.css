@@ -1,0 +1,6 @@
+/* Template-specific styles for download mode */
+
+/* In download mode, move the nome-portale text up by 20px */
+[data-download-mode="true"] .nome-portale-text {
+  transform: translateY(-20px);
+}
