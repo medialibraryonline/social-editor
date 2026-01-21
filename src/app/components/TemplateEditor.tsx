@@ -135,9 +135,58 @@ export function TemplateEditor() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
-      {/* Left Panel - Editor Controls */}
-      <div className="w-96 overflow-y-auto border-r bg-white p-6">
+    <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-gray-50">
+      {/* Preview Panel - On top for mobile, right for desktop */}
+      <div className="h-[50vh] lg:h-auto flex-none lg:flex-1 flex items-center justify-center overflow-auto bg-gray-100 p-4 lg:p-8 order-1 lg:order-2">
+        <div className="relative preview-scale">
+          <div 
+            ref={canvasRef}
+            style={{ 
+              width: '1080px', 
+              height: '1350px',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            <CanvasIsolator>
+              {state.templateType === 'risorsa' && (
+                <RisorsaTemplate
+                  colorScheme={state.colorScheme}
+                  composizione={state.composizione}
+                  logoPortale={state.logoPortale}
+                  nomePortale={state.nomePortale}
+                  imgRisorsa={state.imgRisorsa}
+                  risorsaTitle={state.risorsaTitle}
+                />
+              )}
+              {state.templateType === 'list' && (
+                <ListaTemplate
+                  colorScheme={state.colorScheme}
+                  composizione={state.composizione}
+                  logoPortale={state.logoPortale}
+                  nomePortale={state.nomePortale}
+                  imgLista1={state.imgLista1}
+                  imgLista2={state.imgLista2}
+                  imgLista3={state.imgLista3}
+                  listaTitle={state.listaTitle}
+                  curator={state.curator}
+                />
+              )}
+              {state.templateType === 'comunicazione' && (
+                <ComunicazioneTemplate
+                  colorScheme={state.colorScheme}
+                  logoPortale={state.logoPortale}
+                  nomePortale={state.nomePortale}
+                  primaryText={state.primaryText}
+                  secondaryText={state.secondaryText}
+                />
+              )}
+            </CanvasIsolator>
+          </div>
+        </div>
+      </div>
+
+      {/* Editor Controls Panel - On bottom for mobile, left for desktop */}
+      <div className="flex-1 lg:flex-none w-full lg:w-96 overflow-y-auto border-r bg-white p-6 order-2 lg:order-1">
         <h1 className="mb-6 text-2xl font-bold">MLOL Template Editor</h1>
 
         <div className="space-y-4">
@@ -358,61 +407,6 @@ export function TemplateEditor() {
           <Download className="mr-2 h-4 w-4" />
           Download as JPEG
         </Button>
-      </div>
-
-      {/* Right Panel - Preview */}
-      <div className="flex flex-1 items-center justify-center overflow-auto bg-gray-100 p-8">
-        <div 
-          className="relative"
-          style={{
-            transform: 'scale(0.5)',
-            transformOrigin: 'center center',
-          }}
-        >
-          <div 
-            ref={canvasRef}
-            style={{ 
-              width: '1080px', 
-              height: '1350px',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            }}
-          >
-            <CanvasIsolator>
-              {state.templateType === 'risorsa' && (
-                <RisorsaTemplate
-                  colorScheme={state.colorScheme}
-                  composizione={state.composizione}
-                  logoPortale={state.logoPortale}
-                  nomePortale={state.nomePortale}
-                  imgRisorsa={state.imgRisorsa}
-                  risorsaTitle={state.risorsaTitle}
-                />
-              )}
-              {state.templateType === 'list' && (
-                <ListaTemplate
-                  colorScheme={state.colorScheme}
-                  composizione={state.composizione}
-                  logoPortale={state.logoPortale}
-                  nomePortale={state.nomePortale}
-                  imgLista1={state.imgLista1}
-                  imgLista2={state.imgLista2}
-                  imgLista3={state.imgLista3}
-                  listaTitle={state.listaTitle}
-                  curator={state.curator}
-                />
-              )}
-              {state.templateType === 'comunicazione' && (
-                <ComunicazioneTemplate
-                  colorScheme={state.colorScheme}
-                  logoPortale={state.logoPortale}
-                  nomePortale={state.nomePortale}
-                  primaryText={state.primaryText}
-                  secondaryText={state.secondaryText}
-                />
-              )}
-            </CanvasIsolator>
-          </div>
-        </div>
       </div>
     </div>
   );

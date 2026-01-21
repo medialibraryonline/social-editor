@@ -4,3 +4,15 @@
 [data-download-mode="true"] .nome-portale-text {
   transform: translateY(-20px);
 }
+
+/* Responsive preview scaling */
+.preview-scale {
+  transform: scale(0.25);
+  transform-origin: center center;
+}
+
+@media (min-width: 1024px) {
+  .preview-scale {
+    transform: scale(0.5);
+  }
+}
