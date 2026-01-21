@@ -135,9 +135,9 @@ export function TemplateEditor() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-gray-50">
+    <div className="flex flex-col lg:flex-row h-screen overflow-y-auto lg:overflow-hidden bg-gray-50">
       {/* Preview Panel - On top for mobile, right for desktop */}
-      <div className="h-[50vh] lg:h-auto flex-none lg:flex-1 flex items-center justify-center overflow-auto bg-gray-100 p-4 lg:p-8 order-1 lg:order-2">
+      <div className="h-[50vh] flex-none lg:flex-1 flex items-center justify-center lg:overflow-auto bg-gray-100 p-4 lg:p-8 order-1 lg:order-2">
         <div className="relative preview-scale">
           <div 
             ref={canvasRef}
@@ -186,7 +186,7 @@ export function TemplateEditor() {
       </div>
 
       {/* Editor Controls Panel - On bottom for mobile, left for desktop */}
-      <div className="flex-1 lg:flex-none w-full lg:w-96 overflow-y-auto border-r bg-white p-6 order-2 lg:order-1">
+      <div className="flex-none w-full lg:w-96 lg:overflow-y-auto border-r bg-white p-6 order-2 lg:order-1">
         <h1 className="mb-6 text-2xl font-bold">MLOL Template Editor</h1>
 
         <div className="space-y-4">
