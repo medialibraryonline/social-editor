@@ -155,27 +155,33 @@ export function ListaEbookTemplate({
 
       {/* Images Grid - Ebook Layout */}
       <div className="absolute left-[230px] top-[365px]" data-name="ebook">
-        <div className="absolute left-0 top-0 h-[621px] w-[404px]">
-          <img 
-            alt="Lista 1" 
-            className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" 
-            src={imgLista1 || imgImgLista3} 
-          />
-        </div>
-        <div className="absolute left-[424px] top-0 h-[301px] w-[196px]">
-          <img 
-            alt="Lista 2" 
-            className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" 
-            src={imgLista2 || imgImgLista3} 
-          />
-        </div>
-        <div className="absolute left-[424px] top-[320px] h-[301px] w-[196px]">
-          <img 
-            alt="Lista 3" 
-            className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" 
-            src={imgLista3 || imgImgLista3} 
-          />
-        </div>
+        <div 
+          className="absolute left-0 top-0 h-[621px] w-[404px]"
+          style={{
+            backgroundImage: `url(${imgLista1 || imgImgLista3})`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        <div 
+          className="absolute left-[424px] top-0 h-[301px] w-[196px]"
+          style={{
+            backgroundImage: `url(${imgLista2 || imgImgLista3})`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        <div 
+          className="absolute left-[424px] top-[320px] h-[301px] w-[196px]"
+          style={{
+            backgroundImage: `url(${imgLista3 || imgImgLista3})`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
       </div>
     </div>
   );

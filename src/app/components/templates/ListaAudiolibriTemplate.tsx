@@ -155,27 +155,33 @@ export function ListaAudiolibriTemplate({
 
       {/* Images Grid - Audiolibri Layout */}
       <div className="absolute left-[69px] top-[365px]" data-name="audiolibri">
-        <div className="absolute left-0 size-[621px] top-0">
-          <img 
-            alt="Lista 1" 
-            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" 
-            src={imgLista1 || imgImgLista3} 
-          />
-        </div>
-        <div className="absolute left-[641px] size-[301px] top-0">
-          <img 
-            alt="Lista 2" 
-            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" 
-            src={imgLista2 || imgImgLista3} 
-          />
-        </div>
-        <div className="absolute left-[641px] size-[301px] top-[320px]">
-          <img 
-            alt="Lista 3" 
-            className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" 
-            src={imgLista3 || imgImgLista3} 
-          />
-        </div>
+        <div 
+          className="absolute left-0 size-[621px] top-0"
+          style={{
+            backgroundImage: `url(${imgLista1 || imgImgLista3})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        <div 
+          className="absolute left-[641px] size-[301px] top-0"
+          style={{
+            backgroundImage: `url(${imgLista2 || imgImgLista3})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        <div 
+          className="absolute left-[641px] size-[301px] top-[320px]"
+          style={{
+            backgroundImage: `url(${imgLista3 || imgImgLista3})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
       </div>
     </div>
   );

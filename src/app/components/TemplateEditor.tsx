@@ -87,6 +87,7 @@ export function TemplateEditor() {
   const [isLoadingPortali, setIsLoadingPortali] = useState(true);
   const [isLoadingLogo, setIsLoadingLogo] = useState(false);
   const [portalSearchQuery, setPortalSearchQuery] = useState('');
+  const [isPortalSelectOpen, setIsPortalSelectOpen] = useState(false);
 
   const canvasRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -106,42 +107,66 @@ export function TemplateEditor() {
 
   // Fetch and parse CSV data
   useEffect(() => {
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRjSc-UiJF13MjE47_wxPNlHbtM3TgKxxy443hlxKHY8jN40KLk3wR7kp38r0ytHau0CKsT1Uy77XVp/pub?gid=230801727&single=true&output=csv';
+    const apiUrl = 'https://mlol.link/api/v1/enti.json';
     
-    Papa.parse(csvUrl, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        const portalData = results.data
-          .filter((row: any) => row['name'] && row['url'] && row['logo'])
-          .map((row: any) => ({
-            name: row['name'],
-            url: row['url'],
-            logoUrl: row['logo']
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('API Response:', data);
+        
+        // Handle both array and object responses
+        const entiArray = Array.isArray(data) ? data : (data.enti || data.data || []);
+        
+        console.log('Enti array:', entiArray);
+        
+        // Map the API data to our PortalData format
+        const portalData = entiArray
+          .filter((ente: any) => {
+            // Check multiple possible field names
+            const hasName = ente.nome || ente.name || ente.title;
+            const hasSite = ente.sito || ente.url || ente.site;
+            const hasLogo = ente.logo || ente.logoUrl || ente.image;
+            return hasName && hasSite && hasLogo;
+          })
+          .map((ente: any) => ({
+            name: ente.nome || ente.name || ente.title,
+            url: ente.sito || ente.url || ente.site,
+            logoUrl: ente.logo || ente.logoUrl || ente.image
           }));
+        
+        console.log('Processed portal data:', portalData);
         
         setPortali(portalData);
         setIsLoadingPortali(false);
-      },
-      error: (error) => {
-        console.error('Error loading CSV:', error);
+      })
+      .catch(error => {
+        console.error('Error loading portals from API:', error);
         setIsLoadingPortali(false);
-      }
-    });
+      });
   }, []);
 
   // Handle portal selection
   const handlePortalChange = (portalId: string) => {
     setSelectedPortalId(portalId);
+    setIsPortalSelectOpen(false); // Close after selection
     const portal = portali.find((p, index) => index.toString() === portalId);
     if (portal) {
       // Pre-convert the logo to data URL to avoid CORS issues during export
       setIsLoadingLogo(true);
+      
+      // Remove http:// or https:// from the URL
+      const cleanUrl = portal.url.replace(/^https?:\/\//, '');
+      
       convertImageToDataURL(portal.logoUrl)
         .then((dataURL) => {
           setState(prev => ({
             ...prev,
-            nomePortale: portal.url,
+            nomePortale: cleanUrl,
             logoPortale: dataURL,
             logoPortaleName: portal.name
           }));
@@ -152,12 +177,21 @@ export function TemplateEditor() {
           // Fallback to original URL
           setState(prev => ({
             ...prev,
-            nomePortale: portal.url,
+            nomePortale: cleanUrl,
             logoPortale: portal.logoUrl,
             logoPortaleName: portal.name
           }));
           setIsLoadingLogo(false);
         });
+    }
+  };
+
+  // Prevent Select from closing while typing in search
+  const handlePortalOpenChange = (open: boolean) => {
+    setIsPortalSelectOpen(open);
+    if (!open) {
+      // Reset search when closing
+      setPortalSearchQuery('');
     }
   };
 
@@ -444,7 +478,7 @@ export function TemplateEditor() {
           {/* Portal Selection */}
           <div>
             <Label htmlFor="portal-select">Seleziona Portale</Label>
-            <Select value={selectedPortalId} onValueChange={handlePortalChange} disabled={isLoadingPortali}>
+            <Select value={selectedPortalId} onValueChange={handlePortalChange} disabled={isLoadingPortali} onOpenChange={handlePortalOpenChange}>
               <SelectTrigger id="portal-select" className="mt-1">
                 <SelectValue placeholder={isLoadingPortali ? "Caricamento portali..." : "Scegli un portale"} />
               </SelectTrigger>
@@ -975,7 +1009,7 @@ export function TemplateEditor() {
           {state.templateType === 'comunicazione' && (
             <>
               <div>
-                <Label htmlFor="primaryText">Primary Text</Label>
+                <Label htmlFor="primaryText">Testo principale</Label>
                 <Textarea
                   id="primaryText"
                   value={state.primaryText}
@@ -985,7 +1019,7 @@ export function TemplateEditor() {
                 />
               </div>
               <div>
-                <Label htmlFor="secondaryText">Secondary Text</Label>
+                <Label htmlFor="secondaryText">Testo secondario</Label>
                 <Textarea
                   id="secondaryText"
                   value={state.secondaryText}
