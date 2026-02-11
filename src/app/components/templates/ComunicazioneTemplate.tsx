@@ -1,6 +1,7 @@
 import svgPaths from "@/imports/svg-tf333zrxe7";
 import imgLogoPortale from "figma:asset/6d8ae6b82fc31b6ee858fd0b9b28cee8a59fb545.png";
 import { ColorScheme } from '../TemplateEditor';
+import { MlolFullLogo } from './MlolFullLogo';
 
 interface ComunicazioneTemplateProps {
   colorScheme: ColorScheme;
@@ -65,43 +66,54 @@ export function ComunicazioneTemplate({
 
       {/* Logo and Portal Name */}
       <div className="absolute content-stretch flex gap-[24px] items-center left-[60px] top-[80px]" data-name="logo-mlol-portale">
-        <div style={{ backgroundColor: '#ffffff' }} className="content-stretch flex items-center p-[12px] relative rounded-[12px] shrink-0" data-name="image-wrapper">
-          <div className="relative shrink-0 size-[94px]" data-name="logo-portale">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="" className="w-full h-full" src={logoPortale || imgLogoPortale} style={{ objectFit: 'contain' }} />
+        {logoPortale ? (
+          <>
+            <div style={{ backgroundColor: '#ffffff' }} className="content-stretch flex items-center p-[12px] relative rounded-[12px] shrink-0" data-name="image-wrapper">
+              <div 
+                className="relative shrink-0 size-[94px]" 
+                data-name="logo-portale"
+                style={{
+                  backgroundImage: `url(${logoPortale})`,
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
             </div>
-          </div>
-        </div>
-        <div className="content-stretch flex flex-col gap-[13px] items-start relative shrink-0" data-name="Text">
-          <div className="h-[75.032px] relative shrink-0 w-[186.504px]" data-name="Logo MLOL">
-            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 186.504 75.032">
-              <g id="Logo MLOL">
-                <path d={svgPaths.p2a3eb600} fill={colors.logoFill} id="Vector" />
-                <g id="Icone O MLOL">
-                  <path d={svgPaths.p19001580} fill={colors.logoFill} id="Path" />
-                </g>
-                <path d={svgPaths.p5e6dd80} fill={colors.logoFill} id="Vector_2" />
-                <g id="Lettera M MLOL">
-                  <path d={svgPaths.p17988780} fill={colors.logoFill} id="h" />
-                </g>
-              </g>
-            </svg>
-          </div>
-          <p 
-            className="nome-portale-text"
-            style={{ 
-              fontFamily: 'Switzer, sans-serif', 
-              fontWeight: 500, 
-              fontSize: '32px', 
-              lineHeight: '1',
-              color: colors.text,
-              margin: 0,
-              padding: 0
-            }}
-          >
-            {nomePortale}
-          </p>
-        </div>
+            <div className="content-stretch flex flex-col gap-[13px] items-start relative shrink-0" data-name="Text">
+              <div className="h-[75.032px] relative shrink-0 w-[186.504px]" data-name="Logo MLOL">
+                <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 186.504 75.032">
+                  <g id="Logo MLOL">
+                    <path d={svgPaths.p2a3eb600} fill={colors.logoFill} id="Vector" />
+                    <g id="Icone O MLOL">
+                      <path d={svgPaths.p19001580} fill={colors.logoFill} id="Path" />
+                    </g>
+                    <path d={svgPaths.p5e6dd80} fill={colors.logoFill} id="Vector_2" />
+                    <g id="Lettera M MLOL">
+                      <path d={svgPaths.p17988780} fill={colors.logoFill} id="h" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <p 
+                className="nome-portale-text"
+                style={{ 
+                  fontFamily: 'Switzer, sans-serif', 
+                  fontWeight: 500, 
+                  fontSize: '32px', 
+                  lineHeight: '1',
+                  color: colors.text,
+                  margin: 0,
+                  padding: 0
+                }}
+              >
+                {nomePortale}
+              </p>
+            </div>
+          </>
+        ) : (
+          <MlolFullLogo colorScheme={colorScheme} />
+        )}
       </div>
 
       {/* Texts */}
