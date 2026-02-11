@@ -132,7 +132,7 @@ export function ListaAudiolibriTemplate({
         top: 'calc(50% - 513px)',
         width: '900px',
         fontFamily: 'Rowan, serif',
-        fontWeight: 500,
+        fontWeight: 400,
         fontSize: '56px',
         lineHeight: '1.25',
         color: colors.text,
