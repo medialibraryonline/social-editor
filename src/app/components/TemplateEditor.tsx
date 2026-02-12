@@ -17,6 +17,7 @@ import { Download, Upload, Info, X } from 'lucide-react';
 import LogoMlol from '@/imports/LogoMlol';
 import { Checkbox } from './ui/checkbox';
 import { RisorsaIcon, ListaEbookIcon, ListaAudiolibriIcon, ComunicazioneIcon } from './TemplateIcons';
+import svgPaths from '@/imports/svg-nh0klp6fcg';
 
 export type ColorScheme = 'chiaro' | 'medio' | 'scuro';
 export type TemplateType = 'risorsa' | 'list-ebook' | 'list-audiolibri' | 'comunicazione';
@@ -472,7 +473,27 @@ export function TemplateEditor() {
 
       {/* Editor Controls Panel - On bottom for mobile, left for desktop */}
       <div className="flex-none w-full lg:w-96 lg:overflow-y-auto border-r bg-white p-[24px] order-2 lg:order-1">
-        <h1 className="mb-6 text-2xl font-bold" style={{ fontFamily: 'Rowan, serif' }}>MLOL Template Editor</h1>
+        {/* Header Title */}
+        <div className="content-stretch flex gap-[4px] h-[65px] items-start mb-6 w-full border-b border-[#e5e7eb] pb-[24px]">
+          {/* MLOL Logo */}
+          <div className="h-[47.474px] relative shrink-0 w-[118px]">
+            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 118 47.4739">
+              <g id="mlol">
+                <path d={svgPaths.p26f8a00} fill="#003326" id="Vector" />
+                <path d={svgPaths.pd08fd00} fill="#003326" id="Vector_2" />
+                <g id="Lettera M MLOL">
+                  <path d={svgPaths.p1ddb2e00} fill="#003326" id="h" />
+                </g>
+                <path d={svgPaths.pe00be40} fill="#003326" id="Exclude" />
+              </g>
+            </svg>
+          </div>
+          {/* Subtitle */}
+          <div className="font-semibold leading-none relative shrink-0 text-[#003326] text-[16px] w-[125px] whitespace-pre-wrap" style={{ fontFamily: 'Switzer, sans-serif' }}>
+            <p className="mb-0">editor grafico</p>
+            <p>per social media</p>
+          </div>
+        </div>
 
         <div className="space-y-4">
           {/* Portal Selection */}
