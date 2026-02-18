@@ -159,7 +159,7 @@ export function ListaEbookTemplate({
           className="absolute left-0 top-0 h-[621px] w-[404px]"
           style={{
             backgroundImage: `url(${imgLista1 || imgImgLista3})`,
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
           }}
@@ -168,7 +168,7 @@ export function ListaEbookTemplate({
           className="absolute left-[424px] top-0 h-[301px] w-[196px]"
           style={{
             backgroundImage: `url(${imgLista2 || imgImgLista3})`,
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
           }}
@@ -177,7 +177,7 @@ export function ListaEbookTemplate({
           className="absolute left-[424px] top-[320px] h-[301px] w-[196px]"
           style={{
             backgroundImage: `url(${imgLista3 || imgImgLista3})`,
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
           }}

@@ -1073,7 +1073,7 @@ export function TemplateEditor() {
                   Che cos'è questo strumento?
                 </h2>
                 <p className="text-sm leading-relaxed text-foreground">
-                  Questo strumento è stato realizzato per permettere alle biblioteche di produrre facilmente delle grafiche per promuovere il servizio MLOL sui propri canali social media. Scegli il template, personalizzalo, seleziona il tuo portale e carica le copertine delle risorse che vuoi promuovere o il messaggio testuale che vuoi comunicare. Poi basta scaricare l'immagine che sarà pronta per essere pubblicata online.
+                  Questo strumento ti consente di produrre facilmente delle grafiche per la promozione del servizio MLOL sui canali social della tua biblioteca. Seleziona il tuo portale, personalizza il template e inserisci un messaggio testuale oppure carica le copertine delle risorse che vuoi segnalare: potrai subito scaricare l'immagine e pubblicarla online.
                 </p>
                 <div className="pt-4 border-t border-gray-200">
                   <div className="w-[33%]">
