@@ -81,8 +81,17 @@ jobs:
           echo "release_name=$NAME" >> "$GITHUB_OUTPUT"
           echo "base_path=$BASE" >> "$GITHUB_OUTPUT"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (workaround optional deps bug)
+        shell: bash
+        run: |
+          rm -f package-lock.json
+          npm install --include=optional --no-package-lock
+
+      - name: Verify Linux native optional packages
+        shell: bash
+        run: |
+          node -e "require.resolve('@rollup/rollup-linux-x64-gnu')"
+          node -e "require.resolve('lightningcss-linux-x64-gnu')"
 
       - name: Build (figma asset resolver)
         run: npx vite build --config vite.config.figma.ts --base "${{ steps.meta.outputs.base_path }}"
