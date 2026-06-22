@@ -238,97 +238,20 @@ export function TemplateEditor() {
     }
   };
 
-  // Convert image URL to data URL for CORS-free export
+  // Fetch image URL and convert to data URL so html2canvas can embed it during export.
+  // The source serves CORS headers for this app's origin, so we fetch directly.
   const convertImageToDataURL = async (url: string): Promise<string> => {
-    console.log('Converting image to data URL:', url);
-    
-    // Try multiple CORS proxies in order
-    const proxies = [
-      `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-      `https://corsproxy.io/?${encodeURIComponent(url)}`,
-      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-    ];
-    
-    // Try each proxy in sequence with timeout
-    for (const proxyUrl of proxies) {
-      try {
-        console.log('Trying proxy:', proxyUrl);
-        
-        // Add timeout to fetch
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-        
-        const response = await fetch(proxyUrl, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        
-        if (response.ok) {
-          const blob = await response.blob();
-          const dataURL = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
-          console.log('Successfully converted image with proxy');
-          return dataURL;
-        }
-      } catch (error) {
-        console.log('Proxy failed:', proxyUrl, error);
-        continue; // Try next proxy
-      }
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
-    // If all proxies fail, try direct canvas approach
-    console.log('All proxies failed, trying canvas approach');
-    try {
-      const dataURL = await new Promise<string>((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        
-        const timeout = setTimeout(() => {
-          reject(new Error('Image load timeout'));
-        }, 5000);
-        
-        img.onload = () => {
-          clearTimeout(timeout);
-          try {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            const ctx = canvas.getContext('2d');
-            
-            if (ctx) {
-              ctx.drawImage(img, 0, 0);
-              const dataURL = canvas.toDataURL('image/png');
-              console.log('Successfully converted image with canvas');
-              resolve(dataURL);
-            } else {
-              reject(new Error('Failed to get canvas context'));
-            }
-          } catch (error) {
-            console.error('Canvas conversion error:', error);
-            reject(error);
-          }
-        };
-        
-        img.onerror = (error) => {
-          clearTimeout(timeout);
-          console.error('Direct image load error:', error);
-          reject(error);
-        };
-        
-        // Try direct load
-        img.src = url;
-      });
-      
-      return dataURL;
-    } catch (error) {
-      console.error('Canvas approach failed:', error);
-      // Last resort: return original URL
-      // This might cause CORS issues during export but at least shows the logo in preview
-      console.log('Returning original URL as fallback');
-      return url;
-    }
+    const blob = await response.blob();
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   };
 
   const handleDownload = async () => {
