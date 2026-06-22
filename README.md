@@ -9,3 +9,8 @@
 
   Run `npm run dev` to start the development server.
   
+## Build
+
+```
+npx vite build --config vite.config.figma.ts --base /social-editor
+```
