@@ -1,5 +1,5 @@
 
-  # Customizable Figma Editor
+  # social editor
 
   This is a code bundle for Customizable Figma Editor. The original project is available at https://www.figma.com/design/4BY8OLcGBnkNun6dCKosmZ/Customizable-Figma-Editor.
 
